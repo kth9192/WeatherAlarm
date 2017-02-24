@@ -8,7 +8,6 @@ import com.google.gson.annotations.SerializedName;
 
 public class JsonList {
 
-
     @SerializedName("body")
     private Body body;
 
