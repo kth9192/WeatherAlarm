@@ -3,13 +3,19 @@ package com.example.weatheralarm;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.weatheralarm.JSON.Item;
 import com.example.weatheralarm.JSON.ResponseJson;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 
 import retrofit2.Call;
@@ -18,66 +24,80 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements weatherView{
+
     public static String TAG = MainActivity.class.getName();
-    private ArrayList<ArrayList<Item>> source;
-    private ArrayList<Item> data;
-    private HashMap<String, Double> fcstMap = new HashMap<>();
+
+    private WeatherPresenterImpl weatherPresenterImpl;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        weatherPresenterImpl = new WeatherPresenterImpl(this);
+
+        weatherPresenterImpl.checkWeather();
+
+    }
+
+    public void initUIforSunny(HashMap<String , String> viewMap){
+
+        RelativeLayout relativeLayout;
+
         setContentView(R.layout.activity_main);
+        relativeLayout = (RelativeLayout) findViewById(R.id.activity_main);
+        relativeLayout.setBackgroundResource(R.drawable.sunny_bg);
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://newsky2.kma.go.kr")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        TextView temp = (TextView) findViewById(R.id.Temperature);
+        TextView tempTxt = (TextView) findViewById(R.id.tempTxt);
+        TextView rainPer = (TextView) findViewById(R.id.rainPer);
+        TextView rainTxt = (TextView) findViewById(R.id.rainTxt);
+        TextView cloudTxt = (TextView) findViewById(R.id.cloudTxt);
 
-        weatherJsonInterface service = retrofit.create(weatherJsonInterface.class);
-        Call<ResponseJson> call = service.getResponse();
-        call.enqueue(new Callback<ResponseJson>() {
-            @Override
-            public void onResponse(Call<ResponseJson> call, Response<ResponseJson> response) {
+        temp.setText("온도 : " + viewMap.get("T3H"));
 
-                if (response.isSuccessful()){
-                    source = new ArrayList<>(Collections.singletonList(response.body().getJsonList().getBody().getItems().getItem()));
-                    data = source.get(0);
+        tempTxt.setText(viewMap.get("TempTxt"));
 
-                    for (int i = 0; i<data.size(); i++){
-//                        Log.d(TAG, data.get(i).getCategory());
+        rainPer.setText("강수확률 : " + viewMap.get("POP"));
 
-                        switch (data.get(i).getCategory()){
-                            case "POP": //강수확률
-                                 fcstMap.put(data.get(i).getCategory(), data.get(i).getFcstValue());
-                                Log.d(TAG , "강수확률" + fcstMap.get(data.get(i).getCategory()));
-                                break;
+        rainTxt.setText(viewMap.get("rainState"));
 
-                            case "PTY": //강수형태
-                                fcstMap.put(data.get(i).getCategory(), data.get(i).getFcstValue());
-                                Log.d(TAG , "강수형태" + fcstMap.get(data.get(i).getCategory()));
-                                break;
+        cloudTxt.setText(viewMap.get("SkyState"));
 
-                            case "SKY": //하늘상태
-                                fcstMap.put(data.get(i).getCategory(), data.get(i).getFcstValue());
-                                Log.d(TAG , "하늘상태" + fcstMap.get(data.get(i).getCategory()));
-                                break;
+        ImageView weatherImg;
+        weatherImg = (ImageView) findViewById(R.id.weatherImg);
 
-                            case "T3H": //3시간 기온
-                                fcstMap.put(data.get(i).getCategory(), data.get(i).getFcstValue());
+        Glide.with(this).load(R.drawable.sunny).into(weatherImg);
+    }
 
-                                Log.d(TAG , "3시간 기온" + fcstMap.get(data.get(i).getCategory()));
-                                break;
-                        }
-                    }
-                }
-            }
+    public void initUIforRainy(HashMap<String , String> viewMap){
 
-            @Override
-            public void onFailure(Call<ResponseJson> call, Throwable t) {
-                Log.d(TAG, "콜실패" + t.toString());
-            }
-        });
+        RelativeLayout relativeLayout;
 
+        setContentView(R.layout.activity_main);
+        relativeLayout = (RelativeLayout) findViewById(R.id.activity_main);
+        relativeLayout.setBackgroundResource(R.drawable.rain_bg);
+
+        TextView temp = (TextView) findViewById(R.id.Temperature);
+        TextView tempTxt = (TextView) findViewById(R.id.tempTxt);
+        TextView rainPer = (TextView) findViewById(R.id.rainPer);
+        TextView rainTxt = (TextView) findViewById(R.id.rainTxt);
+        TextView cloudTxt = (TextView) findViewById(R.id.cloudTxt);
+
+        temp.setText("온도 : " + viewMap.get("T3H"));
+
+        tempTxt.setText(viewMap.get("TempTxt"));
+
+        rainPer.setText("강수확률 : " + viewMap.get("POP"));
+
+        rainTxt.setText(viewMap.get("rainState"));
+
+        cloudTxt.setText(viewMap.get("SkyState"));
+
+        ImageView weatherImg;
+        weatherImg = (ImageView) findViewById(R.id.weatherImg);
+
+        Glide.with(this).load(R.drawable.rain).into(weatherImg);
     }
 }

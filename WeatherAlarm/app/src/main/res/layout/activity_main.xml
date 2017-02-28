@@ -8,10 +8,74 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/rain_bg"
     tools:context="com.example.weatheralarm.MainActivity">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:id="@+id/weatherMain"
+        android:gravity="center_horizontal"
+        android:text="이시각 날씨"
+        android:layout_marginTop="183dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="40dp"
+        android:layout_height="20dp"
+        android:id="@+id/Temperature"
+        android:gravity="center_horizontal"
+        android:layout_above="@+id/rainPer"
+        android:layout_toRightOf="@+id/weatherImg"
+        android:layout_toEndOf="@+id/weatherImg"
+        android:layout_marginLeft="29dp"
+        android:layout_marginStart="29dp" />
+
+    <TextView
+        android:layout_width="40dp"
+        android:layout_height="20dp"
+        android:id="@+id/rainPer"
+        android:gravity="center_horizontal"
+        android:layout_alignBottom="@+id/weatherImg"
+        android:layout_alignLeft="@+id/Temperature"
+        android:layout_alignStart="@+id/Temperature" />
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/weatherImg"
+        android:layout_below="@+id/weatherMain"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/tempTxt"
+        android:gravity="center_horizontal"
+        android:layout_above="@+id/cloudTxt"
+        android:layout_alignLeft="@+id/rainTxt"
+        android:layout_alignStart="@+id/rainTxt"
+        android:layout_marginBottom="17dp" />
+
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/rainTxt"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="49dp"
+        android:layout_below="@+id/rainPer"
+        android:layout_alignLeft="@+id/weatherMain"
+        android:layout_alignStart="@+id/weatherMain" />
+
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/cloudTxt"
+        android:gravity="center_horizontal"
+        android:layout_below="@+id/rainTxt"
+        android:layout_alignLeft="@+id/rainTxt"
+        android:layout_alignStart="@+id/rainTxt" />
+
+
 </RelativeLayout>
