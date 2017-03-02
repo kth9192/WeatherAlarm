@@ -13,6 +13,7 @@ public interface weatherInteractor {
     interface  weatherUiInteractor{
         void CallWeatherUIforSunny(HashMap<String, String > viewMap);
         void CallWeatherUIforRainy(HashMap<String, String > viewMap);
+        void CallWeatherUIforSnow(HashMap<String, String > viewMap);
 
     }
 

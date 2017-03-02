@@ -8,8 +8,12 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/rain_bg"
     tools:context="com.example.weatheralarm.MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvId"/>
 
     <TextView
         android:layout_width="300dp"
@@ -22,7 +26,7 @@
         android:layout_centerHorizontal="true" />
 
     <TextView
-        android:layout_width="40dp"
+        android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:id="@+id/Temperature"
         android:gravity="center_horizontal"
@@ -33,7 +37,7 @@
         android:layout_marginStart="29dp" />
 
     <TextView
-        android:layout_width="40dp"
+        android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:id="@+id/rainPer"
         android:gravity="center_horizontal"

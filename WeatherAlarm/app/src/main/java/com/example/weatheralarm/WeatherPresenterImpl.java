@@ -33,4 +33,10 @@ public class WeatherPresenterImpl implements weatherPresenter, weatherInteractor
     public void CallWeatherUIforRainy(HashMap<String, String> viewMap) {
         mweatherView.initUIforRainy(viewMap);
     }
+
+    @Override
+    public void CallWeatherUIforSnow(HashMap<String, String> viewMap) {
+        mweatherView.initUIforSnow(viewMap);
+
+    }
 }

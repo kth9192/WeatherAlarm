@@ -39,7 +39,6 @@ public class WeatherModel implements weatherInteractor {
         this.mweatherUiInteractor = mweatherUiInteractor;
     }
 
-
     @Override
     public void checkWeatherData() {
 
@@ -53,20 +52,35 @@ public class WeatherModel implements weatherInteractor {
                 .addConverterFactory(GsonConverterFactory.create())
         .build();
 
-
+        //현재 날짜와 시간 계산
         long now = System.currentTimeMillis();
-        Date date = new Date(now);
-        SimpleDateFormat CurDateFormat = new SimpleDateFormat("yyyyMMdd");
-        String strCurDate = CurDateFormat.format(date);
+        final Date date = new Date(now);
+        SimpleDateFormat YearDateFormat = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat HourFormat = new SimpleDateFormat("HH00");
+        String strCurDate = YearDateFormat.format(date);
+        String strHour = HourFormat.format(date);
+
+        //기상청 예보형식에 맞는 시간변환
+        String HourResult;
+        if (Integer.parseInt(strHour) % 300 == 0){
+            HourResult = Integer.toString(Integer.parseInt(strHour)-100);
+        }else if (Integer.parseInt(strHour) % 300 == 100){
+            HourResult = Integer.toString(Integer.parseInt(strHour)+100);
+        }else {
+            HourResult = strHour;
+        }
+
         Log.d(TAG, strCurDate);
+        Log.d(TAG, strHour);
+        Log.d(TAG, HourResult);
 
         weatherJsonInterface service = retrofit.create(weatherJsonInterface.class);
         Call<ResponseJson> call = service.getResponse(weatherJsonInterface.ServiceKey ,
-                                  "20170228" ,
-                                  "0800",
-                                  "1",
-                                  "1" ,
-                                  "15"  ,
+                                  strCurDate ,
+                        HourResult,
+                                  "53",
+                                  "38" ,
+                                  "13"  ,
                                   "json");
 
         call.enqueue(new Callback<ResponseJson>() {
@@ -128,10 +142,12 @@ public class WeatherModel implements weatherInteractor {
 
         Log.d(TAG, String.valueOf(fcstMap.get("POP")));
 
+        //강수확률 조언
             if (fcstMap.get("POP") >= 45.0) {
                 viewMap.put("precipitation", "비가올 확률이 높습니다.");
             }
 
+        //호우상태 조언
             if (fcstMap.get("PTY") == 1.0) {
                 viewMap.put("rainState", "비가 오고 있습니다.");
             } else if (fcstMap.get("PTY") == 2.0) {
@@ -140,6 +156,7 @@ public class WeatherModel implements weatherInteractor {
                 viewMap.put("rainState", "눈이 오고 있습니다.");
             }
 
+        //하늘상태 조언
             if (fcstMap.get("SKY") == 1.0) {
                 viewMap.put("SkyState", "오늘은 맑습니다.");
             } else if (fcstMap.get("SKY") == 2.0) {
@@ -149,6 +166,8 @@ public class WeatherModel implements weatherInteractor {
             } else if (fcstMap.get("SKY") == 4.0) {
                 viewMap.put("SkyState", "오늘은 흐린 날입니다.");
             }
+
+        //기온조언
 
             if (fcstMap.get("T3H") >= 30.0) {
                 viewMap.put("TempTxt", "폭염주의보가 의심됩니다.");
@@ -160,6 +179,7 @@ public class WeatherModel implements weatherInteractor {
                 viewMap.put("TempTxt", "오늘은 날씨가 쌀쌀합니다.");
             }
 
+        //풍속 조언
             if (fcstMap.get("WSD") <= 9.0) {
                 viewMap.put("wind" , "오늘은 바람이 약합니다");
 
@@ -170,8 +190,12 @@ public class WeatherModel implements weatherInteractor {
                 viewMap.put("wind" , "오늘은 강풍주의보 입니다!");
             }
 
+        //배경색 설정조건
             if (fcstMap.get("POP") >= 45.0) {
                 mweatherUiInteractor.CallWeatherUIforRainy(viewMap);
+            }
+            else if (fcstMap.get("PTY") == 3.0){
+                mweatherUiInteractor.CallWeatherUIforSnow(viewMap);
             }
            else {
                 mweatherUiInteractor.CallWeatherUIforSunny(viewMap);

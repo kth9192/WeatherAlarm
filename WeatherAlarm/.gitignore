@@ -7,3 +7,11 @@
 /build
 /captures
 .externalNativeBuild
+/app/src/main/java/com/example/weatheralarm/beaconInfo.java
+libs/
+src/main/java/com/example/weatheralarm/beaconUtil.java
+src/main/res/drawable/snow.png
+src/main/res/drawable/snow_bg.png
+/app/src/main/res/drawable/rain.png
+/app/src/main/res/drawable/sunny.png
+/app/src/main/res/drawable/snow.png

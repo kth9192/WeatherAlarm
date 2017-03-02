@@ -8,7 +8,9 @@ import java.util.HashMap;
 
 public interface weatherView {
 
+
     void initUIforSunny(HashMap<String , String> viewMap);
     void initUIforRainy(HashMap<String , String> viewMap);
+    void initUIforSnow(HashMap<String , String> viewMap);
 
 }
