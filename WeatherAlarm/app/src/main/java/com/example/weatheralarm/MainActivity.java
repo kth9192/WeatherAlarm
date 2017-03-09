@@ -45,14 +45,11 @@ public class MainActivity extends AppCompatActivity implements weatherView , bea
 
     }
 
-
-
     public void initUIforSunny(HashMap<String , String> viewMap){
 
         RelativeLayout relativeLayout;
 
         relativeLayout = (RelativeLayout) findViewById(R.id.activity_main);
-
 
         relativeLayout.setBackgroundResource(R.drawable.sunny_bg);
 

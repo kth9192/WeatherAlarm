@@ -26,7 +26,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class WeatherModel implements weatherInteractor {
 
-    private String TAG = WeatherModel.class.getName();
+    private static String TAG = WeatherModel.class.getName();
 
     private weatherInteractor.weatherUiInteractor mweatherUiInteractor;
 

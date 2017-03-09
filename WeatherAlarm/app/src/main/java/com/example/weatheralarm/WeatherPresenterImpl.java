@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class WeatherPresenterImpl implements weatherPresenter, weatherInteractor.weatherUiInteractor{
 
-    private String TAG = WeatherPresenterImpl.class.getName();
+    private static String TAG = WeatherPresenterImpl.class.getName();
 
     private weatherView mweatherView;
     private WeatherModel weatherModel;
