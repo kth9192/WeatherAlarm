@@ -34,9 +34,8 @@ public class ListModel implements listInteractor {
     private ArrayList<String> listDesc = new ArrayList<>();
     ActivityMainBinding binding;
 
-    public ListModel(listInteractor.Interactor mInteractor , ActivityMainBinding binding) {
+    public ListModel(listInteractor.Interactor mInteractor) {
         this.mInteractor = mInteractor;
-        this.binding = binding;
     }
 
     @Override
@@ -44,7 +43,7 @@ public class ListModel implements listInteractor {
         bindingInstance.addValueEventListener(new ValueEventListener() {
 
             int i =0;
-             List<PictureInfo> mPictureInfo = new ArrayList<PictureInfo>();
+             ArrayList<PictureInfo> mPictureInfo = new ArrayList<PictureInfo>();
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -62,8 +61,8 @@ public class ListModel implements listInteractor {
                     i++;
                 }
 
-                DataBindingAdapter adapter = new DataBindingAdapter(mPictureInfo);
-                binding.recycler.setAdapter(adapter);
+                ReturnViewSource(mPictureInfo);
+
             }
 
             @Override
@@ -71,6 +70,10 @@ public class ListModel implements listInteractor {
                 Log.d(TAG, "firebase call error" + String.valueOf(databaseError));
             }
         });
+    }
+
+    public void ReturnViewSource(ArrayList<PictureInfo> mPictureInfo){
+        mInteractor.successCallData(mPictureInfo);
     }
 
 }

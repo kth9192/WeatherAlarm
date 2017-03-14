@@ -77,7 +77,7 @@ public class WeatherModel implements weatherInteractor {
         weatherJsonInterface service = retrofit.create(weatherJsonInterface.class);
         Call<ResponseJson> call = service.getResponse(weatherJsonInterface.ServiceKey ,
                                   strCurDate ,
-                        HourResult,
+                                  HourResult,
                                   "53",
                                   "38" ,
                                   "13"  ,

@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.example.databindexam.databinding.ActivityMainBinding;
 
+import java.util.ArrayList;
+
 /**
  * Created by kth919 on 2017-03-07.
  */
@@ -14,9 +16,9 @@ public class ListPresenterImpl implements listPresenter, listInteractor.Interact
     private listInteractor mlistInteractor;
     private ListModel listModel;
 
-    protected ListPresenterImpl(mainView mmainView, ActivityMainBinding binding) {
+    protected ListPresenterImpl(mainView mmainView) {
         this.mainView = mainView;
-        listModel = new ListModel(this, binding);
+        listModel = new ListModel(this);
     }
 
     @Override
@@ -26,8 +28,8 @@ public class ListPresenterImpl implements listPresenter, listInteractor.Interact
 
 
     @Override
-    public void successCallData( ) {
-        mainView.recyclerHandler();
+    public void successCallData(ArrayList<PictureInfo> mPictureInfo ) {
+        mainView.recyclerHandler(mPictureInfo);
     }
 
     @Override

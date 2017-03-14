@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.databindexam.databinding.ActivityMainBinding;
 import com.example.databindexam.databinding.ItemRecycleBinding;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements mainView {
         binding.setMain(this);
         binding.recycler.setLayoutManager(new LinearLayoutManager(this));
 
-        mlistPresenterImpl = new ListPresenterImpl(this , binding);
+        mlistPresenterImpl = new ListPresenterImpl(this);
 
         mlistPresenterImpl.ListCall();
     }
@@ -40,9 +41,9 @@ public class MainActivity extends AppCompatActivity implements mainView {
 
 
     @Override
-    public void recyclerHandler() {
-
-
+    public void recyclerHandler(ArrayList<PictureInfo> mPictureInfo ) {
+          DataBindingAdapter adapter = new DataBindingAdapter(mPictureInfo);
+          binding.recycler.setAdapter(adapter);
     }
 
 

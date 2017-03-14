@@ -1,7 +1,9 @@
 package com.example.weatheralarm;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.CollapsibleActionView;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -13,6 +15,8 @@ import com.estimote.sdk.Beacon;
 import com.estimote.sdk.BeaconManager;
 import com.estimote.sdk.Region;
 import com.estimote.sdk.SystemRequirementsChecker;
+import com.tsengvn.typekit.Typekit;
+import com.tsengvn.typekit.TypekitContextWrapper;
 
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements weatherView , bea
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         tvId = (TextView) findViewById(R.id.tvId);
 
         weatherPresenterImpl = new WeatherPresenterImpl(this);
@@ -59,11 +64,11 @@ public class MainActivity extends AppCompatActivity implements weatherView , bea
         TextView rainTxt = (TextView) findViewById(R.id.rainTxt);
         TextView cloudTxt = (TextView) findViewById(R.id.cloudTxt);
 
-        temp.setText("온도 : " + viewMap.get("T3H"));
+        temp.setText(viewMap.get("T3H") + " °C");
 
         tempTxt.setText(viewMap.get("TempTxt"));
 
-        rainPer.setText("강수확률 : " + viewMap.get("POP"));
+        rainPer.setText("강수확률 : " + viewMap.get("POP") + "%");
 
         rainTxt.setText(viewMap.get("rainState"));
 
@@ -185,6 +190,9 @@ public class MainActivity extends AppCompatActivity implements weatherView , bea
         super.onPause();
     }
 
-
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(TypekitContextWrapper.wrap(newBase));
+    }
 
 }

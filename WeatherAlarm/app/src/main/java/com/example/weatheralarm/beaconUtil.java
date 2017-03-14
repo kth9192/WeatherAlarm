@@ -10,6 +10,8 @@ import android.content.Intent;
 import com.estimote.sdk.Beacon;
 import com.estimote.sdk.BeaconManager;
 import com.estimote.sdk.Region;
+import com.tsengvn.typekit.Typekit;
+import com.tsengvn.typekit.TypekitContextWrapper;
 
 import java.util.List;
 import java.util.UUID;
@@ -25,6 +27,11 @@ public class beaconUtil extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        Typekit.getInstance()
+                .addNormal(Typekit.createFromAsset(this, "fonts/ya_Regular.ttf"))
+                .addBold(Typekit.createFromAsset(this, "fonts/ya_Bold.ttf"));
+
         beaconManager = new BeaconManager(getApplicationContext());
 
         // Application 설치가 끝나면 Beacon Monitoring Service를 시작한다.
@@ -78,4 +85,6 @@ public class beaconUtil extends Application {
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(1, notification);
     }
+
+
 }
