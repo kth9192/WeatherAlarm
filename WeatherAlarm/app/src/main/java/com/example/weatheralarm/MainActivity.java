@@ -1,6 +1,8 @@
 package com.example.weatheralarm;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.view.CollapsibleActionView;
@@ -39,15 +41,19 @@ public class MainActivity extends AppCompatActivity implements weatherView , bea
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        setContentView(R.layout.activity_main);
 
         tvId = (TextView) findViewById(R.id.tvId);
 
         weatherPresenterImpl = new WeatherPresenterImpl(this);
 
         beaconSearch();
-
     }
 
     public void initUIforSunny(HashMap<String , String> viewMap){
@@ -157,16 +163,15 @@ public class MainActivity extends AppCompatActivity implements weatherView , bea
                         weatherPresenterImpl.checkWeather();
 
                     }
-                    else if(nearestBeacon.getRssi() < -90){
+                    else if(nearestBeacon.getRssi() < -100){
                         flag = 0;
-                        Toast.makeText(MainActivity.this, "연결종료", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(MainActivity.this, "연결종료", Toast.LENGTH_SHORT).show();
                         isConnected = false;
-                    }
 
+                    }
                 }
             }
         });
-
         region = new Region("ranged region",
                 UUID.fromString(beaconID), MajorCode , MinorCode); // 본인이 연결할 Beacon의 ID와 Major / Minor Code를 알아야 한다.
     }
@@ -182,15 +187,33 @@ public class MainActivity extends AppCompatActivity implements weatherView , bea
                 beaconManager.startRanging(region);
             }
         });
+
     }
 
     @Override
     protected void onPause() {
 //        beaconManager.stopRanging(region);
         super.onPause();
+
     }
 
     @Override
+    public void onBackPressed() {
+
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        startActivity(intent);
+        isConnected = false;
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+     isConnected = false;
+    }
+
+        @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(TypekitContextWrapper.wrap(newBase));
     }

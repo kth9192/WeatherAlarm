@@ -50,12 +50,18 @@ public class beaconUtil extends Application {
         beaconManager.setMonitoringListener(new BeaconManager.MonitoringListener() {
             @Override
             public void onEnteredRegion(Region region, List<Beacon> list) {
-                showNotification("estimote beacon", "비콘 연결됨" + list.get(0).getRssi());
-//              getApplicationContext().startActivity(new Intent(getApplicationContext(), PopupActivity.class).putExtra("uuid", String.valueOf(list.get(0).getProximityUUID()) ).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+
+                if (list.get(0).getRssi() > -75){
+                         showNotification("날씨 알람", "날씨를 보려면 누르세요");
+                }
+
+//                showNotification("estimote beacon", "비콘 연결됨" + list.get(0).getRssi());
+
+//              getApplicationContext().startActivity(new Intent(getApplicationContext(), MainActivity.class).putExtra("uuid", String.valueOf(list.get(0).getProximityUUID()) ).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
             }
             @Override
             public void onExitedRegion(Region region) {
-                showNotification("나감", "비콘 연결끊김");
+//                showNotification("나감", "연결끊김");
             }
         });
     }
@@ -85,6 +91,5 @@ public class beaconUtil extends Application {
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(1, notification);
     }
-
 
 }
