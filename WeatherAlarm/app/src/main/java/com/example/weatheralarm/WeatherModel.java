@@ -190,17 +190,7 @@ public class WeatherModel implements weatherInteractor {
                 viewMap.put("wind" , "오늘은 강풍주의보 입니다!");
             }
 
-        //배경색 설정조건
-            if (fcstMap.get("POP") >= 45.0) {
-                mweatherUiInteractor.CallWeatherUIforRainy(viewMap);
-            }
-            else if (fcstMap.get("PTY") == 3.0){
-                mweatherUiInteractor.CallWeatherUIforSnow(viewMap);
-            }
-           else {
-                mweatherUiInteractor.CallWeatherUIforSunny(viewMap);
-            }
-
+        mweatherUiInteractor.CallWeatherUI(viewMap);
         }
 
     }

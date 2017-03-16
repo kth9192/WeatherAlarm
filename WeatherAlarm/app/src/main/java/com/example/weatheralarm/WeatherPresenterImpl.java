@@ -18,25 +18,12 @@ public class WeatherPresenterImpl implements weatherPresenter, weatherInteractor
         weatherModel = new WeatherModel(this);
     }
 
-
     @Override
     public void checkWeather() {
         weatherModel.checkWeatherData();
     }
 
-    @Override
-    public void CallWeatherUIforSunny(HashMap<String, String> viewMap) {
-        mweatherView.initUIforSunny(viewMap);
-    }
-
-    @Override
-    public void CallWeatherUIforRainy(HashMap<String, String> viewMap) {
-        mweatherView.initUIforRainy(viewMap);
-    }
-
-    @Override
-    public void CallWeatherUIforSnow(HashMap<String, String> viewMap) {
-        mweatherView.initUIforSnow(viewMap);
-
+    public void CallWeatherUI(HashMap<String, String> viewMap){
+        mweatherView.initUI(viewMap);
     }
 }

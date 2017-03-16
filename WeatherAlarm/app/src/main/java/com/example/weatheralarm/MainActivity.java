@@ -56,13 +56,20 @@ public class MainActivity extends AppCompatActivity implements weatherView , bea
         beaconSearch();
     }
 
-    public void initUIforSunny(HashMap<String , String> viewMap){
-
+    public void initUI(HashMap<String , String> viewMap){
         RelativeLayout relativeLayout;
 
         relativeLayout = (RelativeLayout) findViewById(R.id.activity_main);
 
-        relativeLayout.setBackgroundResource(R.drawable.sunny_bg);
+        if (viewMap.containsValue("비가올 확률이 높습니다.")){
+            relativeLayout.setBackgroundResource(R.drawable.rain_bg);
+        }
+        else if (viewMap.containsValue("눈이 오고 있습니다.")){
+            relativeLayout.setBackgroundResource(R.drawable.snow_bg);
+        }
+        else {
+            relativeLayout.setBackgroundResource(R.drawable.sunny_bg);
+        }
 
         TextView temp = (TextView) findViewById(R.id.Temperature);
         TextView tempTxt = (TextView) findViewById(R.id.tempTxt);
@@ -83,65 +90,15 @@ public class MainActivity extends AppCompatActivity implements weatherView , bea
         ImageView weatherImg;
         weatherImg = (ImageView) findViewById(R.id.weatherImg);
 
-        Glide.with(this).load(R.drawable.sunny).into(weatherImg);
-    }
-
-    public void initUIforRainy(HashMap<String , String> viewMap){
-
-        RelativeLayout relativeLayout;
-
-        relativeLayout = (RelativeLayout) findViewById(R.id.activity_main);
-        relativeLayout.setBackgroundResource(R.drawable.rain_bg);
-
-        TextView temp = (TextView) findViewById(R.id.Temperature);
-        TextView tempTxt = (TextView) findViewById(R.id.tempTxt);
-        TextView rainPer = (TextView) findViewById(R.id.rainPer);
-        TextView rainTxt = (TextView) findViewById(R.id.rainTxt);
-        TextView cloudTxt = (TextView) findViewById(R.id.cloudTxt);
-
-        temp.setText("온도 : " + viewMap.get("T3H"));
-
-        tempTxt.setText(viewMap.get("TempTxt"));
-
-        rainPer.setText("강수확률 : " + viewMap.get("POP"));
-
-        rainTxt.setText(viewMap.get("rainState"));
-
-        cloudTxt.setText(viewMap.get("SkyState"));
-
-        ImageView weatherImg;
-        weatherImg = (ImageView) findViewById(R.id.weatherImg);
-
-        Glide.with(this).load(R.drawable.rain).into(weatherImg);
-    }
-
-    public void  initUIforSnow(HashMap<String , String> viewMap){
-        RelativeLayout relativeLayout;
-
-        setContentView(R.layout.activity_main);
-        relativeLayout = (RelativeLayout) findViewById(R.id.activity_main);
-        relativeLayout.setBackgroundResource(R.drawable.snow_bg);
-
-        TextView temp = (TextView) findViewById(R.id.Temperature);
-        TextView tempTxt = (TextView) findViewById(R.id.tempTxt);
-        TextView rainPer = (TextView) findViewById(R.id.rainPer);
-        TextView rainTxt = (TextView) findViewById(R.id.rainTxt);
-        TextView cloudTxt = (TextView) findViewById(R.id.cloudTxt);
-
-        temp.setText("온도 : " + viewMap.get("T3H"));
-
-        tempTxt.setText(viewMap.get("TempTxt"));
-
-        rainPer.setText("강수확률 : " + viewMap.get("POP"));
-
-        rainTxt.setText(viewMap.get("rainState"));
-
-        cloudTxt.setText(viewMap.get("SkyState"));
-
-        ImageView weatherImg;
-        weatherImg = (ImageView) findViewById(R.id.weatherImg);
-
-        Glide.with(this).load(R.drawable.snow).into(weatherImg);
+        if (viewMap.containsValue("비가올 확률이 높습니다.")){
+            Glide.with(this).load(R.drawable.rain).into(weatherImg);
+        }
+        else if (viewMap.containsValue("눈이 오고 있습니다.")){
+            Glide.with(this).load(R.drawable.snow).into(weatherImg);
+        }
+        else {
+            Glide.with(this).load(R.drawable.sunny).into(weatherImg);
+        }
     }
 
     public void beaconSearch() {
@@ -187,7 +144,6 @@ public class MainActivity extends AppCompatActivity implements weatherView , bea
                 beaconManager.startRanging(region);
             }
         });
-
     }
 
     @Override
@@ -199,7 +155,6 @@ public class MainActivity extends AppCompatActivity implements weatherView , bea
 
     @Override
     public void onBackPressed() {
-
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
@@ -210,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements weatherView , bea
     @Override
     protected void onRestart() {
         super.onRestart();
-     isConnected = false;
+        isConnected = false;
     }
 
         @Override

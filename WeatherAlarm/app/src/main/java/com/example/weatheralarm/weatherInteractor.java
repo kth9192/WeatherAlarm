@@ -11,9 +11,8 @@ public interface weatherInteractor {
     void checkWeatherData();
 
     interface  weatherUiInteractor{
-        void CallWeatherUIforSunny(HashMap<String, String > viewMap);
-        void CallWeatherUIforRainy(HashMap<String, String > viewMap);
-        void CallWeatherUIforSnow(HashMap<String, String > viewMap);
+
+            void CallWeatherUI(HashMap<String, String> viewMap);
 
     }
 

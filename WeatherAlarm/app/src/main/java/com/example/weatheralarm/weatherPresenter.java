@@ -7,4 +7,5 @@ package com.example.weatheralarm;
 public interface weatherPresenter {
 
     void checkWeather();
+
 }
