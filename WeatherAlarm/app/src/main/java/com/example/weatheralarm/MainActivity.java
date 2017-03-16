@@ -24,6 +24,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity implements weatherView , beaconInfo{
 
     public static String TAG = MainActivity.class.getName();
@@ -33,10 +36,27 @@ public class MainActivity extends AppCompatActivity implements weatherView , bea
     private BeaconManager beaconManager;
     private Region region;
 
-    private TextView tvId;
+    @BindView(R.id.tvId)
+    TextView tvId;
+
     int flag;
 
     private boolean isConnected;
+
+    @BindView(R.id.Temperature)
+    TextView temp;
+
+   @BindView(R.id.tempTxt)
+    TextView tempTxt;
+
+    @BindView(R.id.rainPer)
+    TextView rainPer;
+
+    @BindView(R.id.rainTxt)
+    TextView rainTxt;
+
+    @BindView(R.id.cloudTxt)
+    TextView cloudTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +68,7 @@ public class MainActivity extends AppCompatActivity implements weatherView , bea
     protected void onStart(){
         super.onStart();
         setContentView(R.layout.activity_main);
-
-        tvId = (TextView) findViewById(R.id.tvId);
+        ButterKnife.bind(this);
 
         weatherPresenterImpl = new WeatherPresenterImpl(this);
 
@@ -70,12 +89,6 @@ public class MainActivity extends AppCompatActivity implements weatherView , bea
         else {
             relativeLayout.setBackgroundResource(R.drawable.sunny_bg);
         }
-
-        TextView temp = (TextView) findViewById(R.id.Temperature);
-        TextView tempTxt = (TextView) findViewById(R.id.tempTxt);
-        TextView rainPer = (TextView) findViewById(R.id.rainPer);
-        TextView rainTxt = (TextView) findViewById(R.id.rainTxt);
-        TextView cloudTxt = (TextView) findViewById(R.id.cloudTxt);
 
         temp.setText(viewMap.get("T3H") + " °C");
 
