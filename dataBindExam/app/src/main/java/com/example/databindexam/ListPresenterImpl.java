@@ -16,7 +16,7 @@ public class ListPresenterImpl implements listPresenter, listInteractor.Interact
     private listInteractor mlistInteractor;
     private ListModel listModel;
 
-    protected ListPresenterImpl(mainView mmainView) {
+    protected ListPresenterImpl(mainView mainView) {
         this.mainView = mainView;
         listModel = new ListModel(this);
     }

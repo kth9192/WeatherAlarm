@@ -42,7 +42,7 @@ public class ListModel implements listInteractor {
     public void getList() {
         bindingInstance.addValueEventListener(new ValueEventListener() {
 
-            int i =0;
+            int i = 0;
              ArrayList<PictureInfo> mPictureInfo = new ArrayList<PictureInfo>();
 
             @Override
